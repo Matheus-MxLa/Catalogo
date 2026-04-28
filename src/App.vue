@@ -1,15 +1,23 @@
 <script setup>
-  import { ref } from 'vue';
-  import { listaProdutos } from './data/produtos.js';
-  import ProdutoChild from './components/ProdutoChild.vue'
+  import { ref } from 'vue'
+  import { listaProdutos } from './data/produtos';
+  import ProdutoChild from './components/ProdutoChild.vue';
   import ButtonChild from './components/ButtonChild.vue';
 
   const produtos = ref(listaProdutos)
-  const alternando = ref(true)
+  const alterando = ref(false)
   const preco = ref(0)
+  const posicaoProduto = ref(-1)
 
   function salvarPreco() {
-    alert('Teste')
+    produtos.value[posicaoProduto.value].preco = Number(preco.value);
+    alterando.value = false;
+  }
+
+  function corrigirPreco(idProduto) {
+    posicaoProduto.value = produtos.value.findIndex(p => p.id === idProduto);
+    preco.value = produtos.value[posicaoProduto.value].preco
+    alterando.value = true;
   }
 </script>
 
@@ -19,13 +27,15 @@
     <div>
       <ul>
         <ProdutoChild v-for="produto in produtos"
-          :key="produto.id" :id="produto.id"
-          :nome="produto.nome" :preco="produto.preco"
-          :categoria="produto.categoria"
-        />
+            :key="produto.id" :id="produto.id"
+            :nome="produto.nome" :preco="produto.preco"
+            :categoria="produto.categoria"
+            @corrigirpreco="corrigirPreco"
+          >
+        </ProdutoChild>
       </ul>
     </div>
-    <div v-show="alternando">
+    <div v-show="alterando">
       <label>Preço</label>
       <input type="number" v-model.number="preco">
       <ButtonChild @clique="salvarPreco()">Salvar</ButtonChild>

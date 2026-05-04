@@ -1,28 +1,33 @@
 <script setup>
-  import { ref } from 'vue'
-  import { listaProdutos } from './data/produtos';
-  import ProdutoChild from './components/ProdutoChild.vue';
-  import ButtonChild from './components/ButtonChild.vue';
+import { ref } from 'vue'
+import { listaProdutos } from './data/produtos';
 
-  const produtos = ref(listaProdutos)
-  const alterando = ref(false)
-  const preco = ref(0)
-  const posicaoProduto = ref(-1)
+import ProdutoChild from './components/ProdutoChild.vue';
+import ButtonChild from './components/ButtonChild.vue';
 
-  function salvarPreco() {
-    produtos.value[posicaoProduto.value].preco = Number(preco.value);
-    alterando.value = false;
-  }
+const produtos = ref(listaProdutos)
+const alterando = ref(false)
+const preco = ref(0)
+const posicaoProduto = ref(-1)
 
-  function corrigirPreco(idProduto) {
-    posicaoProduto.value = produtos.value.findIndex(p => p.id === idProduto);
-    preco.value = produtos.value[posicaoProduto.value].preco
-    alterando.value = true;
-  }
+function salvarPreco() {
+  produtos.value[posicaoProduto.value].preco = Number(preco.value);
+  alterando.value = false;
+}
+
+function corrigirPreco(idProduto) {
+  posicaoProduto.value = produtos.value.findIndex(p => p.id === idProduto);
+  preco.value = produtos.value[posicaoProduto.value].preco
+  alterando.value = true;
+}
 </script>
 
 <template>
-  <div class="container">
+
+  <RouterView />
+
+  <!--
+    <div class="container">
     <h1>Catálogo de Produtos</h1>
     <div>
       <ul>
@@ -41,8 +46,7 @@
       <ButtonChild @clique="salvarPreco()">Salvar</ButtonChild>
     </div>
   </div>
+  -->
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

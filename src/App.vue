@@ -1,30 +1,13 @@
 <script setup>
-import { ref } from 'vue'
-import { listaProdutos } from './data/produtos';
-
-import ProdutoChild from './components/ProdutoChild.vue';
-import ButtonChild from './components/ButtonChild.vue';
-
-const produtos = ref(listaProdutos)
-const alterando = ref(false)
-const preco = ref(0)
-const posicaoProduto = ref(-1)
-
-function salvarPreco() {
-  produtos.value[posicaoProduto.value].preco = Number(preco.value);
-  alterando.value = false;
-}
-
-function corrigirPreco(idProduto) {
-  posicaoProduto.value = produtos.value.findIndex(p => p.id === idProduto);
-  preco.value = produtos.value[posicaoProduto.value].preco
-  alterando.value = true;
-}
+  import { RouterView } from 'vue-router';
+  import AppHeader from './components/AppHeader.vue';
 </script>
 
 <template>
-
-  <RouterView />
+  <AppHeader/>
+  <main>
+    <RouterView />
+  </main>
 
   <!--
     <div class="container">
@@ -49,4 +32,6 @@ function corrigirPreco(idProduto) {
   -->
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>

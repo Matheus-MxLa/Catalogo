@@ -1,8 +1,17 @@
 <script setup>
-  //import { ref } from 'vue';
+  import { ref } from 'vue';
+  const mostrarDialog = ref(false);
   defineProps (['id', 'nome', 'preco', 'imagem', 'categoria']);
+  const emit = defineEmits(['altualizarpreco'])
   import ButtonChild from './ButtonChild.vue';
-import { formataPreco } from '@/utilis/produtoUtils';
+  import ProdutoDialog from './ProdutoDialog.vue';
+  import { formataPreco } from '@/utilis/produtoUtils';
+
+  function corrigirPreco(id, preco) {
+    emit('altualizarpreco', id), preco;
+    mostrarDialog.value = false;
+
+  }
 </script>
 
 <template>
@@ -15,7 +24,14 @@ import { formataPreco } from '@/utilis/produtoUtils';
     <div>
       <img :src="imagem" class="produto-imagem"/>
     </div>
-    <ButtonChild>Editar</ButtonChild>
+    <ButtonChild @clique="mostrarDialog = true">Editar</ButtonChild>
+    <ProdutoDialog v-if="mostrarDialog"
+    :nome="nome"
+    :id="id"
+    :preco="preco"
+    :categoria="categoria"
+    @fechar="mostrarDialog = false"
+    />
   </div>
 </template>
 

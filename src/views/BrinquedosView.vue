@@ -1,7 +1,7 @@
 <script setup>
   import { ref } from 'vue'
   import { listaProdutos } from '@/data/produtos';
-  import ProdutoCard from '@/components/ProdutoCard.vue';
+  import ProdutoCard from '@/components/produtos/ProdutoCard.vue';
   const produtos = ref(listaProdutos);
   produtos.value = produtos.value.filter(p => p.categoria === 'Brinquedos');
 </script>
